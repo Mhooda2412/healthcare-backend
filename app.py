@@ -26,7 +26,7 @@ app.add_middleware(
 )
 
 
-@app.get("/enrollment_geo_data")
+@app.get("/api/v1/enrollment_geo_data")
 async def get_contract_info_count():
     result = await collection.find_one({"query": "enrollment_geo_data"})
 
@@ -36,7 +36,7 @@ async def get_contract_info_count():
         raise HTTPException(status_code=404, detail="Item not found")
 
 
-@app.get("/trends_over_time")
+@app.get("/api/v1/trends_over_time")
 async def get_enrolment_group_state():
     result = await collection.find_one({"query": "trends_over_time"})
 
@@ -44,8 +44,3 @@ async def get_enrolment_group_state():
         return QueryResult(**result)
     else:
         raise HTTPException(status_code=404, detail="Item not found")
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)
