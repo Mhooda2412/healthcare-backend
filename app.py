@@ -1,8 +1,9 @@
+from datetime import datetime
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
-
 
 MONGO_DETAILS = "mongodb+srv://healtcare-db-wr:UHo5NmJA3jhr1UOx@cluster0.6w7jv.mongodb.net/"
 
@@ -14,6 +15,11 @@ collection = database.query_result
 class QueryResult(BaseModel):
     query: str
     result: list
+
+
+class Enrollment(BaseModel):
+    type: str
+    data: list
 
 
 app = FastAPI()
