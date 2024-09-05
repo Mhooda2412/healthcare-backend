@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
 
@@ -136,3 +135,14 @@ async def get_current_ma_enrollments():
     else:
         raise HTTPException(status_code=404, detail="Item not found")
 
+
+@app.get("/api/v1/state_enrollment")
+async def get_current_ma_enrollments():
+    collection = database.enrollment
+    result = await collection.find_one({"type": "state_enrollment"})
+    if result:
+        state_enrollment = result.get("data")
+
+        return {"state_enrollment": state_enrollment}
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
