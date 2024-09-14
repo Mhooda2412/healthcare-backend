@@ -146,3 +146,15 @@ async def get_current_ma_enrollments():
         return {"state_enrollment": state_enrollment}
     else:
         raise HTTPException(status_code=404, detail="Item not found")
+
+
+@app.get("/api/v1/current_year_all_org_plan_filter")
+async def get_current_ma_enrollments():
+    collection = database.enrollment
+    result = await collection.find_one({"type": "current_year_all_org_plan_filter"})
+    if result:
+        current_year_all_org_plan_filter = result.get("data")
+
+        return {"current_year_all_org_plan_filter": current_year_all_org_plan_filter}
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
